@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Cargar el modelo UR5 -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find ur5_v1)/urdf/ur5_1_gripper.xacro'" /> 
+   
+    <!--Spawn Robot in Gazebo-->
+    <!-- Set the position in empty world of the base link-->
+    <arg name="x" default="0" />
+    <arg name="y" default="0" />
+    <arg name="z" default="1.015" />
+
+    <!-- put world file as argument-->
+    <arg name="world_file" default = "$(find ur5_v1)/worlds/my_custom_world.world" />
+
+    <!-- Lanzar Gazebo con tu mundo -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="world_name" value="$(arg world_file)"/>
+    </include>
+
+    <!-- Publicar estados del robot -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    
+    <!-- Spawn the robot using the package gazebo_ros-->
+    <node name="spawn_the_robot" pkg="gazebo_ros" type="spawn_model"  output="screen" args="-urdf -param robot_description -model ur5 -x $(arg x) -y $(arg y) -z $(arg z)" />  
+
+    <!-- Controladores -->
+    <!-- Cargar Controladores -->
+    <rosparam file="$(find ur5_v1)/config/ur5_gripper_controllers.yaml" command="load"/>
+  
+    <!-- Cargar the node Controller manager -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner"
+      args="joint_state_controller 
+      eff_joint_traj_controller 
+      gripper_controller 
+      --timeout 60 " />
+
+    <arg name="sim" default="true" />
+    <arg name="debug" default="false" />
+
+    <!-- Remapea trajectory controller para Gazebo -->
+    <remap if="$(arg sim)" from="/scaled_pos_joint_traj_controller/follow_joint_trajectory" to="/eff_joint_traj_controller/follow_joint_trajectory"/>
+
+    <!-- Lanza MoveIt  con la config hecha y ubicada en la carpeta ur_gripper_moveit_config-->
+    <include file="$(find ur_gripper_moveit_config)/launch/move_group.launch">
+        <arg name="debug" value="$(arg debug)" />
+    </include>
+
+    <!-- Lanza RViz con la configuración de RVIZ guardada en config -->
+    <node name="rviz" pkg="rviz" type="rviz" output="screen"
+            args="-d $(find ur5_v1)/config/config.rviz" />
+
+    <!--______________________________________________________________________-->
+    <!-- Nodo RPY en radianes -->
+    <node name="rpy_marker_rad" pkg="ur5_v1" type="rpy_marker_rad.py" output="screen">
+        <param name="reference_frame" value="base_link"/>
+        <param name="target_frame" value="tool0"/>
+    </node>
+
+    <!-- Nodo RPY en grados -->
+    <node name="rpy_marker_deg" pkg="ur5_v1" type="rpy_marker_deg.py" output="screen">
+        <param name="reference_frame" value="base_link"/>
+        <param name="target_frame" value="tool0"/>
+    </node>
+
+    <!-- Nodo joint_state_marker_rad -->
+    <node name="joint_state_marker_rad" pkg="ur5_v1" type="joint_state_marker_rad.py" output="screen" />
+
+    <!-- Nodo joint_state_marker_deg -->
+    <node name="joint_state_marker_deg" pkg="ur5_v1" type="joint_state_marker_deg.py" output="screen" />
+
+
+</launch>

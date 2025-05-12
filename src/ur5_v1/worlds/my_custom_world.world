@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <!--<include>
+    <uri>model://cafe_table</uri>
+    <pose>-2 -1 0 0 0 0</pose>
+  </include>-->
+  <world name="default">
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Mesa debajo del UR5 -->
+    <include>
+      <uri>model://table</uri>
+      <name>table1</name>
+      <pose>0 0.30 0 0 0 0</pose>
+    </include>
+
+    <!-- Mesa al lado (1 m a la derecha) -->
+    <include>
+      <uri>model://table</uri>
+      <name>table2</name>
+      <pose>0 -0.5 0 0 0 0</pose>
+    </include>
+
+    <!-- Cubitos sobre la mesa debajo del UR5 -->
+    <model name="cube1">
+      <static>true</static>
+      <link name="link">
+        <pose>0.30 0.50 1.04 0 0 0</pose> <!-- 1.015 m + 0.025 m (cubo mitad) -->
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient> <!-- rojo -->
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <model name="cube2">
+      <static>true</static>
+      <link name="link">
+        <pose>-0.50 0 1.04 0 0 0</pose>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- verde -->
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <model name="cube3">
+      <static>true</static>
+      <link name="link">
+        <pose>0 0.3 1.04 0 0 0</pose>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient> <!-- azul -->
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+  </world>
+</sdf>
