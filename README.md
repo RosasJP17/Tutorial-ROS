@@ -121,6 +121,9 @@ Usa tres terminales separadas para este proceso:
   - En la parte superior izquierda, en "Fixed Frame", selecciona base_link.
   - En la parte inferior izquierda, haz clic en "Add", y selecciona "RobotModel" para visualizar el UR5.
 
+![Imagen prueba](URL_de_la_imagen)
+
+
 ✅ Paso 5 – Crear archivo .xacro con configuración personalizada del UR5
 1. Lanzar el Setup Assistant de MoveIt
   ```
