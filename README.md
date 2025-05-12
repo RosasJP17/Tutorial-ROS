@@ -432,6 +432,51 @@ Este archivo lanza MoveIt, remapea controladores para Gazebo y abre RViz con tu 
 Recuerda: En el archivo de Gazebo, ya configuraste que inicie con paused="false", así que Gazebo debería estar listo para el segundo paso sin intervención.
 
 
+✅ Paso 11. Visualización de la orientación (RPY) y posición en RViz
+
+Para poder visualizar la orientación en RPY (radianes y grados) y la posición en RViz, utilizamos dos scripts de Python. Sigue estos pasos para configurarlo:
+
+1. Crear la carpeta y los scripts
+Crea una carpeta llamada scripts dentro de tu paquete ur5_v1 en ~/catkin_ws_6/src/ur5_v1 y agrega los siguientes scripts:
+    - Crea los archivos rpy_marker_rad.py y rpy_marker_deg.py.
+    - Asigna permisos de ejecución a los archivos con el siguiente comando:
+    ```
+    chmod +x rpy_marker_rad.py
+    chmod +x rpy_marker_deg.py
+    ```
+    - Pega los códigos de los scripts que se detallan a continuación en cada archivo.
+
+2. Ejecutar los scripts
+Ejecuta los scripts en dos terminales diferentes:
+  ```
+  rosrun ur5_v1 rpy_marker_rad.py
+  ```
+  ```
+  rosrun ur5_v1 rpy_marker_deg.py
+  ```
+
+3. Configuración en RViz
+  - En RViz, agrega un nuevo marcador:
+    - Ve a "Add" → "Marker"
+    - En "MarkerTopic", selecciona /rpy_marker_rad o /rpy_marker_deg según corresponda.
+  - Guarda tu configuración de RViz como config.rviz (no es necesario crear un nuevo archivo, solo guarda el que ya tenías).
+
+Códigos de los scripts (buscar en el repositorio: src/ur5_v1/) 
+- rpy_marker_rad.py 
+- 
+
+    
+✅
+✅
+✅
+✅
+✅
+✅
+✅
+✅
+✅
+✅
+✅
 
 
 ```
@@ -460,7 +505,7 @@ https://github.com/YeredBC/TURORIAL-ROS.git
 - Asesor: Cesar Martinez Torres
   - 🔗 GitHub: https://github.com/cesar-martinez-torres/UDLAP_Robotics.git
   - 📧 Correo electrónico: cesar.martinez@udlap.mx
----
+
 - Nombre: Juan Pablo Rosas Pineda:
   - 🔗 GitHub: https://github.com/RosasJP17
   - 📧 Correo electrónico: juan.rosaspa@udlap.mx
