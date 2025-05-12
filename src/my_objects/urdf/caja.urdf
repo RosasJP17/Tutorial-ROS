@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot name="box_container">
+  <link name="box_link">
+  
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://my_objects/meshes/Caja.stl" scale="0.017 0.017 0.017"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://my_objects/meshes/Caja.stl" scale="0.017 0.017 0.017"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="1.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-3" ixy="0.0" ixz="0.0"
+               iyy="1e-3" iyz="0.0"
+               izz="1e-3"/>
+    </inertial>
+
+  </link>
+</robot>
